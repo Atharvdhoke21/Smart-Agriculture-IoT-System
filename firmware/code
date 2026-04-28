@@ -1,0 +1,107 @@
+/**************************************************
+ IoT Smart Agriculture System (NodeMCU ESP8266)
+ Sensors: DHT11, Soil Moisture, LDR, DS18B20
+ Control: Relay (Water Pump), LED
+ Platform: Blynk
+**************************************************/
+
+#define BLYNK_PRINT Serial
+
+#include <ESP8266WiFi.h>
+#include <BlynkSimpleEsp8266.h>
+#include <DHT.h>
+#include <OneWire.h>
+#include <DallasTemperature.h>
+
+// ----------- Blynk Credentials -------------
+char auth[] = "YOUR_BLYNK_AUTH_TOKEN";
+char ssid[] = "YOUR_WIFI_NAME";
+char pass[] = "YOUR_WIFI_PASSWORD";
+
+// ----------- Pin Definitions ---------------
+#define DHTPIN D1        // GPIO5
+#define DHTTYPE DHT11
+
+#define SOIL_PIN A0      // Analog pin
+#define LDR_PIN A0       // (Shared via divider)
+
+#define RELAY_PIN D5     // GPIO14
+#define ONE_WIRE_BUS D2  // DS18B20 (GPIO4)
+
+// ----------- Objects -----------------------
+DHT dht(DHTPIN, DHTTYPE);
+OneWire oneWire(ONE_WIRE_BUS);
+DallasTemperature sensors(&oneWire);
+BlynkTimer timer;
+
+// ----------- Thresholds --------------------
+int soilThreshold = 40;   // % (adjust based on calibration)
+
+// ----------- Function: Read Sensors --------
+void sendSensorData()
+{
+  // DHT11
+  float humidity = dht.readHumidity();
+  float temperature = dht.readTemperature();
+
+  // DS18B20
+  sensors.requestTemperatures();
+  float soilTemp = sensors.getTempCByIndex(0);
+
+  // Soil Moisture (0–1023 → %)
+  int soilRaw = analogRead(SOIL_PIN);
+  int soilMoisture = map(soilRaw, 1023, 0, 0, 100);
+
+  // LDR
+  int ldrValue = analogRead(LDR_PIN);
+
+  // -------- Serial Monitor --------
+  Serial.println("------ Sensor Data ------");
+  Serial.print("Temp: "); Serial.println(temperature);
+  Serial.print("Humidity: "); Serial.println(humidity);
+  Serial.print("Soil Moisture: "); Serial.println(soilMoisture);
+  Serial.print("Soil Temp: "); Serial.println(soilTemp);
+  Serial.print("LDR: "); Serial.println(ldrValue);
+
+  // -------- Blynk Virtual Pins --------
+  Blynk.virtualWrite(V0, temperature);
+  Blynk.virtualWrite(V1, humidity);
+  Blynk.virtualWrite(V2, soilMoisture);
+  Blynk.virtualWrite(V3, soilTemp);
+  Blynk.virtualWrite(V4, ldrValue);
+
+  // -------- Pump Control Logic --------
+  if (soilMoisture < soilThreshold)
+  {
+    digitalWrite(RELAY_PIN, LOW);  // Pump ON
+    Blynk.virtualWrite(V5, 1);
+  }
+  else
+  {
+    digitalWrite(RELAY_PIN, HIGH); // Pump OFF
+    Blynk.virtualWrite(V5, 0);
+  }
+}
+
+// ----------- Setup -------------------------
+void setup()
+{
+  Serial.begin(9600);
+
+  pinMode(RELAY_PIN, OUTPUT);
+  digitalWrite(RELAY_PIN, HIGH); // OFF initially
+
+  dht.begin();
+  sensors.begin();
+
+  Blynk.begin(auth, ssid, pass);
+
+  timer.setInterval(2000L, sendSensorData);
+}
+
+// ----------- Loop --------------------------
+void loop()
+{
+  Blynk.run();
+  timer.run();
+}
