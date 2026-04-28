@@ -1,0 +1,47 @@
+# Pin Connections (NodeMCU ESP8266)
+
+1. DHT11 Sensor
+
+* VCC → 3.3V
+* GND → GND
+* Data → GPIO5 (D1)
+
+2. Soil Moisture Sensor
+
+* VCC → 3.3V
+* GND → GND
+* Output → A0 (Analog Pin)
+
+3. DS18B20 Sensor
+
+* VCC → 3.3V
+* GND → GND
+* Data → GPIO4 (D2)
+* Pull-up Resistor: 4.7kΩ between VCC and Data
+
+4. LDR Sensor (Voltage Divider)
+
+* One end → 3.3V
+* Other end → A0 (via 10kΩ resistor to GND)
+
+5. Relay Module
+
+* VCC → 5V
+* GND → GND
+* IN → GPIO14 (D5)
+
+6. Water Pump (via Relay/TIP122)
+
+* Controlled using Relay or TIP122 transistor
+* External 12V supply
+
+7. LED Strip (via TIP122)
+
+* Controlled via GPIO signal
+* Powered using 12V supply
+
+8. Power Connections
+
+* 12V Adapter → Pump + LED
+* 7805 Regulator → 5V output for modules
+* NodeMCU powered via USB or regulated supply
