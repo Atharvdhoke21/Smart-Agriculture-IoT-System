@@ -1,0 +1,7 @@
+# Libraries Used
+
+Blynk
+DHT sensor library
+OneWire
+DallasTemperature
+ESP8266WiFi
