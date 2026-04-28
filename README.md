@@ -51,18 +51,25 @@ The controller processes data and:
 📄 Full Report: [docs/Smart_Agriculture_Report.docx]
 
 ---
+## System Architecture
+<img width="574" height="394" alt="block_diag" src="https://github.com/user-attachments/assets/d45dc427-c478-41c3-a080-4d657ea7aae4" />
 
-## 🔮 Future Scope
 
-* AI-based crop prediction
-* Advanced sensor integration
+## Working
+- Sensor → NodeMCU → Blynk → Pump control
 
----
-
-## 📸 Output
+## Output
 <img width="540" height="1091" alt="img2" src="https://github.com/user-attachments/assets/d751d1b1-912a-4ac2-ae42-4ce06974a01d" />
 <img width="540" height="1074" alt="img3" src="https://github.com/user-attachments/assets/4f7a37ac-b6c3-410c-8443-2639157fcfdd" />
 
+## Features
+- Automated irrigation
+- Real-time monitoring
 
+## Challenges
+- Sensor calibration
+- Noise in readings
 
----
+## Future Scope
+- PCB design
+- AI prediction
