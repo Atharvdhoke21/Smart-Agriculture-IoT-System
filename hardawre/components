@@ -1,0 +1,59 @@
+# Hardware Components with Specifications
+
+1. NodeMCU (ESP8266)
+
+* Operating Voltage: 3.3V
+* Input Voltage: 5V (via Vin/USB)
+* Wi-Fi: 802.11 b/g/n
+* GPIO Pins: 11 digital I/O
+* ADC: 1 (0–3.3V)
+
+2. Soil Moisture Sensor
+
+* Operating Voltage: 3.3V–5V
+* Output: Analog/Digital
+* Function: Measures soil water content
+
+3. DHT11 Temperature & Humidity Sensor
+
+* Voltage: 3.3V–5V
+* Temperature Range: 0–50°C
+* Humidity Range: 20–80%
+* Output: Digital
+
+4. DS18B20 Temperature Sensor
+
+* Voltage: 3.0V–5.5V
+* Output: Digital (1-Wire)
+* Accuracy: ±0.5°C
+
+5. LDR (Light Dependent Resistor)
+
+* Type: Analog sensor
+* Function: Measures light intensity
+* Used with voltage divider (10kΩ resistor)
+
+6. Relay Module
+
+* Voltage: 5V
+* Type: Electromagnetic switch
+* Function: Controls water pump
+
+7. Water Pump (DC)
+
+* Voltage: 12V DC
+* Function: Irrigation control
+
+8. TIP122 Transistor
+
+* Type: NPN Darlington
+* Function: Switching high-power devices
+
+9. Voltage Regulator (7805)
+
+* Input: 7V–12V
+* Output: 5V regulated
+
+10. Power Supply
+
+* Input: 12V DC Adapter
